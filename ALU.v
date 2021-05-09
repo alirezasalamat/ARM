@@ -10,6 +10,7 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
 
     reg [31:0]temp_result;
     reg cout, v;
+    wire n, z;
 
     always @(*) begin
         v = 1'b0;
