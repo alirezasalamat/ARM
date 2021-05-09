@@ -27,6 +27,14 @@ module Mux4_2(a, b, s, out);
   assign out = s ? a : b;
 endmodule
 
+module Mux9_2(a, b, s, out);
+  input [8:0]a, b;
+  input s;
+  output [8:0]out;
+  
+  assign out = s ? a : b;
+endmodule
+
 module Adder32(a, b, out);
   input [31:0]a, b;
   output [31:0]out;
