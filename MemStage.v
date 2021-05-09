@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
 module MemStage(input clk, input rst);
   

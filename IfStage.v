@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
 module IfStage(clk, rst, freeze, branch_taken, branch_address, PC, instruction);
   input clk, rst, freeze, branch_taken;

@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
 module InstructionMemory(clk, rst, address, instruction);
 	input clk, rst;

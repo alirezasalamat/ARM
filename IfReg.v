@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
 module IfReg(clk, rst, rst, freeze, flush, PC_in, instruction_in, PC, instruction);
   input clk, rst, freeze, flush;

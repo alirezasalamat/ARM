@@ -1,11 +1,12 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
-module IdStage(clk, rst, PC, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
-    , wb_en, mem_read, mem_write, B, S, exe_cmd, val_Rn, val_Rm, imm, shift_operand, signed_imm_24, dest, src1, src2, two_src);
+module IdStage(clk, rst, PC_in, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
+    , PC_out, wb_en, mem_read, mem_write, B, S, exe_cmd, val_Rn, val_Rm, imm, shift_operand, signed_imm_24, dest, src1, src2, two_src);
   input clk, rst, hazard, WB_wb_en;
-  input [31:0]instruction, PC, result_wb;
+  input [31:0]instruction, PC_in, result_wb;
   input [3:0]dest_wb, SR;
   
+  output [31:0]PC_out;
   output wb_en, mem_read, mem_write, B, S;
   output [3:0]exe_cmd;
   output [31:0]val_Rn, val_Rm;
@@ -29,22 +30,15 @@ module RegisterFile(clk, rst, src1, src2, dest_wb, result_wb, wb_en, reg1, reg2)
 
   output [31:0] reg1, reg2;
 
+  reg [31:0]reg_data[0:15];
 
-endmodule
+  always @(negedge clk, posedge rst) begin
+    if (wb_en)
+      reg_data[dest_wb] <= result_wb;
+	end
 
-module Controller(S, mode, op_code, exe_cmd, mem_read, mem_write, wb_en, S_out, B);
-  input S;
-  input [1:0] mode;
-  input [3:0] op_code;
-
-  output reg [3:0] exe_cmd;
-  output reg mem_read;
-  output reg mem_write;
-  output reg wb_en;
-  output reg S_out;
-  output reg B;
-
-
+  assign reg1 = reg_data[src1];
+	assign reg2 = reg_data[src2];
 endmodule
 
 module ConditionCheck();

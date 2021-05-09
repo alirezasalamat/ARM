@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
 module Register32(clk, rst, en, in, out);
   input clk, rst, en;

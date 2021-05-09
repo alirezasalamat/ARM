@@ -1,5 +1,5 @@
-`timescale 1ns/1ns
+`include "defines.v"
 
 module IdReg(input clk, input rst);
-  
+    
 endmodule
