@@ -11,3 +11,7 @@ module Arm(input clk, input rst);
   MemReg MemReg_0(clk, rst);
   WbStage WbStage_0(clk, rst);
 endmodule
+
+module test();
+  
+endmodule
