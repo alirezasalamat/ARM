@@ -1,12 +1,11 @@
 `include "defines.v"
 
-module IdStage(clk, rst, PC_in, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
-    , PC_out, wb_en_out, mem_read_out, mem_write_out, B_out, S_out, exe_cmd_out, val_Rn, val_Rm, imm, shift_operand, signed_imm_24, dest, src1, src2, two_src);
+module IdStage(clk, rst, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
+    , wb_en_out, mem_read_out, mem_write_out, B_out, S_out, exe_cmd_out, val_Rn, val_Rm, imm, shift_operand, signed_imm_24, dest, src1, src2, two_src);
   input clk, rst, hazard, WB_wb_en;
-  input [31:0]instruction, PC_in, result_wb;
+  input [31:0]instruction, result_wb;
   input [3:0]dest_wb, SR;
   
-  output [31:0]PC_out;
   output wb_en_out, mem_read_out, mem_write_out, B_out, S_out;
   output [3:0]exe_cmd_out;
   output [31:0]val_Rn, val_Rm;
@@ -28,7 +27,6 @@ module IdStage(clk, rst, PC_in, instruction, result_wb, WB_wb_en, dest_wb, hazar
   Mux9_2 Mux9_2_0(controller_mux_in1, 9'b0, controller_mux_s, controller_mux_out);
   ConditionCheck ConditionCheck_0(instruction[31:28], SR, condition_state);
   
-  assign PC_out = PC_in;
   assign src1 = instruction[19:16];
   assign controller_mux_in1 = {S, B, exe_cmd, mem_write, mem_read, wb_en};
   assign controller_mux_s = (~condition_state) | hazard;
