@@ -1,7 +1,9 @@
 `include "defines.v"
 
 module IdStage(clk, rst, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
-    , wb_en_out, mem_read_out, mem_write_out, B_out, S_out, exe_cmd_out, val_Rn, val_Rm, imm, shift_operand, signed_imm_24, dest, src1, src2, two_src);
+    , wb_en_out, mem_read_out, mem_write_out, B_out, S_out, exe_cmd_out, val_Rn
+    , val_Rm, imm, shift_operand, signed_imm_24, dest, src1, src2, two_src);
+  
   input clk, rst, hazard, WB_wb_en;
   input [31:0]instruction, result_wb;
   input [3:0]dest_wb, SR;

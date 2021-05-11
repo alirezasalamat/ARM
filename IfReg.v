@@ -1,13 +1,13 @@
 `include "defines.v"
 
-module IfReg(clk, rst, rst, freeze, flush, PC_in, instruction_in, PC, instruction);
+module IfReg(clk, rst, freeze, flush, PC_in, instruction_in, PC, instruction);
   input clk, rst, freeze, flush;
   input [31:0]PC_in;
   input [31:0]instruction_in;
   output reg [31:0]PC;
   output reg [31:0]instruction;
   
-  always @(posedge rst, posedge rst) begin
+  always @(posedge clk, posedge rst) begin
     if (rst) begin
       PC <= 0;
       instruction <= 0;
