@@ -2,7 +2,7 @@
 
 module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, imm_in, exe_cmd_in
         , PC_in, val_Rn_in, val_Rm_in, shift_operand_in, signed_imm_24_in, dest_in
-        , wb_en, mem_read, mem_write, B, S, imm, exe_cmd, PC, val_Rn, val_Rm, shift_operand
+        , wb_en, mem_read, mem_write, B, S, SR_out, imm, exe_cmd, PC, val_Rn, val_Rm, shift_operand
         , signed_imm_24, dest);
     input clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, imm_in;
     input [3:0]exe_cmd_in;
@@ -16,7 +16,7 @@ module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, i
     output reg [31:0]PC, val_Rn, val_Rm;
     output reg [11:0]shift_operand;
     output reg [23:0]signed_imm_24;
-    output reg [3:0]dest;
+    output reg [3:0]dest, SR_out;
 
     always @(posedge clk, posedge rst) begin
         if (rst || flush) begin
@@ -25,6 +25,7 @@ module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, i
             mem_write <= 0;
             B <= 0;
             S <= 0;
+            SR_out <= 0;
             imm <= 0;
             exe_cmd <= 0;
             PC <= 0;
@@ -40,6 +41,7 @@ module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, i
             mem_write <= mem_write_in;
             B <= B_in;
             S <= S_in;
+            SR_out <= SR_in;
             imm <= imm_in;
             exe_cmd <= exe_cmd_in;
             PC <= PC_in;
