@@ -3,7 +3,7 @@
 `define WORD 32
 `define REG_FILE 4
 `define SIGNED_IMM 24
-`difine SHIFTER_OPERAND 12
+`define SHIFTER_OPERAND 12
 `define COMMAND 4
 
 `define ARITHMETIC_MODE 2'b00

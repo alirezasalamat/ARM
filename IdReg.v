@@ -1,6 +1,6 @@
 `include "defines.v"
 
-module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, imm_in, exe_cmd_in
+module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, SR_in, imm_in, exe_cmd_in
         , PC_in, val_Rn_in, val_Rm_in, shift_operand_in, signed_imm_24_in, dest_in
         , wb_en, mem_read, mem_write, B, S, SR_out, imm, exe_cmd, PC, val_Rn, val_Rm, shift_operand
         , signed_imm_24, dest);
@@ -9,7 +9,7 @@ module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, i
     input [31:0]PC_in, val_Rn_in, val_Rm_in;
     input [11:0]shift_operand_in;
     input [23:0]signed_imm_24_in;
-    input [3:0]dest_in;
+    input [3:0]dest_in, SR_in;
 
     output reg wb_en, mem_read, mem_write, B, S, imm;
     output reg [3:0]exe_cmd;
