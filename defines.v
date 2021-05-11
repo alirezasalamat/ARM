@@ -10,6 +10,12 @@
 `define MEM_MODE 2'b01
 `define BRANCH_MODE 2'b10
 
+
+`define LSL 2'b00
+`define LSR 2'b01
+`define ASR 2'b10
+`define ROR 2'b11
+
 `define MOV_OP 4'b1101
 `define MVN_OP 4'b1111
 `define ADD_OP 4'b0100
