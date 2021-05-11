@@ -3,5 +3,6 @@
 *.mti
 *.mpf
 *.wlf
+*.bak
 transcript
 work/**
