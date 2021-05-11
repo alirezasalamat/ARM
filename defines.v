@@ -1,5 +1,11 @@
 `timescale 1ns/1ns
 
+`define WORD 32
+`define REG_FILE 4
+`define SIGNED_IMM 24
+`difine SHIFTER_OPERAND 12
+`define COMMAND 4
+
 `define ARITHMETIC_MODE 2'b00
 `define MEM_MODE 2'b01
 `define BRANCH_MODE 2'b10
