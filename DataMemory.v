@@ -19,8 +19,10 @@ module DataMemory(clk, rst, mem_read, mem_write, address, data, result);
             memory[final_address + 1] <= data[23:16];
             memory[final_address + 2] <= data[15:8];
             memory[final_address + 3] <= data[7:0];
+            $display("@%t: DATA_MEM::WRITE: value %d stored at address %d", $time, data, final_address);
 		end
 	end
+
 
     assign result = mem_read ? {memory[final_address], memory[final_address + 1],
             memory[final_address + 2], memory[final_address + 3]} : 32'b0;

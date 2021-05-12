@@ -4,11 +4,12 @@ module InstructionMemory(clk, rst, address, instruction);
 	input clk, rst;
 	input [31:0]address;
 	
-	output [31:0]instruction;
+	output reg [31:0]instruction;
 	
 	reg[7:0] instruction_mem[0:255];
   
   	initial begin
+		  
 		{instruction_mem[0], instruction_mem[1], instruction_mem[2], instruction_mem[3]} = 32'b11100000000000000000000000000000;
 		{instruction_mem[4], instruction_mem[5], instruction_mem[6], instruction_mem[7]} = 32'b1110_00_1_1101_0_0000_0000_000000010100; //MOV R0 ,#20 //R0 = 20
 		{instruction_mem[8], instruction_mem[9], instruction_mem[10], instruction_mem[11]} = 32'b1110_00_1_1101_0_0000_0001_101000000001; //MOV R1 ,#4096 //R1 = 4096
@@ -62,11 +63,12 @@ module InstructionMemory(clk, rst, address, instruction);
 		{instruction_mem[200], instruction_mem[201], instruction_mem[202], instruction_mem[203]} = 32'b11100000000000000000000000000000;
 		{instruction_mem[204], instruction_mem[205], instruction_mem[206], instruction_mem[207]} = 32'b11100000000000000000000000000000;
 		{instruction_mem[208], instruction_mem[209], instruction_mem[210], instruction_mem[211]} = 32'b11100000000000000000000000000000;
-	end
+	  end
 
 	always @(address) begin
 		instruction = {instruction_mem[address], instruction_mem[address + 1],
 						 instruction_mem[address + 2], instruction_mem[address + 3]};
+		$display("@%t: INST_MEM: instruction is %d", $time, instruction);
 	end
 
 endmodule

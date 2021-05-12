@@ -9,10 +9,11 @@ module test();
     Arm arm_0(clk, rst);
 
     initial begin
+        #10
         rst = 1;
         #10;
         rst = 0;
-        #20000;
+        #2000;
         $stop;
     end
 

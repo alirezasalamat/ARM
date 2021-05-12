@@ -8,6 +8,7 @@ module Register32(clk, rst, en, in, out);
   always @(posedge rst, posedge clk) begin
     if (rst) out <= 32'b0;
     else if (en) out <= in;
+    $display("@%t: PC: PC is %d", $time, out);
   end
 endmodule
 
@@ -16,7 +17,7 @@ module Mux32_2(a, b, s, out);
   input s;
   output [31:0]out;
   
-  assign out = s ? a : b;
+  assign out = s ? b : a;
 endmodule
 
 module Mux4_2(a, b, s, out);
@@ -24,7 +25,7 @@ module Mux4_2(a, b, s, out);
   input s;
   output [3:0]out;
   
-  assign out = s ? a : b;
+  assign out = s ?  b : a;
 endmodule
 
 module Mux9_2(a, b, s, out);
@@ -32,7 +33,7 @@ module Mux9_2(a, b, s, out);
   input s;
   output [8:0]out;
   
-  assign out = s ? a : b;
+  assign out = s ?  b : a;
 endmodule
 
 module Adder32(a, b, out);

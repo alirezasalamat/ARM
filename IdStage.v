@@ -49,10 +49,14 @@ module RegisterFile(clk, rst, src1, src2, dest_wb, result_wb, wb_en, reg1, reg2)
 
   reg [31:0]reg_data[0:15];
 
-  always @(negedge clk, posedge rst) begin
-    if (wb_en)
+  always @(negedge clk) begin
+    if (wb_en) begin
       reg_data[dest_wb] <= result_wb;
+      $display("@%t: REG_FILE::WRITE: value %d stored in register %d", $time, result_wb, dest_wb);
+    end
 	end
+
+  
 
   assign reg1 = reg_data[src1];
 	assign reg2 = reg_data[src2];

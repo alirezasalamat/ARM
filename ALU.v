@@ -38,7 +38,7 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
                 v = ((val1[31] == ~val2[31]) & (temp_result[31] != val1[31]));
             end
             `SBC_EXE: begin
-                temp_result = {val1[31], val1} - {val2[31], val2} - 2'b01;
+                temp_result = {val1[31], val1} - {val2[31], val2} - {32'b0, ~cin};
                 cout = temp_result[32];
                 v = ((val1[31] == ~val2[31]) & (temp_result[31] != val1[31]));
             end
@@ -59,13 +59,13 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
             `TST_EXE: begin
                 temp_result = val1 & val2;
             end
-            `LDR_EXE: begin
-                temp_result = val1 + val2;
-            end
-            `STR_EXE: begin
-                // @TODO: - or + ?
-                temp_result = val1 + val2;
-            end
+            //`LDR_EXE: begin
+            //    temp_result = val1 + val2;
+            //end
+            //`STR_EXE: begin
+            //    // @TODO: - or + ?
+            //    temp_result = val1 + val2;
+            //end
         endcase
     end
 
