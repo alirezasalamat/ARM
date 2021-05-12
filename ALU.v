@@ -8,7 +8,7 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
     output [31:0]result;
     output [3:0]SR;
 
-    reg [31:0]temp_result;
+    reg [32:0]temp_result;
     reg cout, v;
     wire n, z;
 

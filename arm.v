@@ -120,7 +120,7 @@ module Arm(clk, rst);
                         .PC(ID_reg_pc_out),
                         .val_Rn(ID_reg_val_Rn_out),
                         .val_Rm(ID_reg_val_Rm_out), 
-                        .shift_operand(ID_reg_shift_op_out), 
+                        .shift_op(ID_reg_shift_op_out), 
                         .signed_imm_24(ID_reg_signed_imm_out),
                         .alu_result(ALU_res), 
                         .br_address(branch_addr), 
