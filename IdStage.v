@@ -68,6 +68,8 @@ module ConditionCheck(condition, status_register, condition_state);
 
   output reg condition_state;
 
+  wire z, c, n ,v;
+
   assign {z, c, n, v} = status_register;
 
   always @(*) begin
