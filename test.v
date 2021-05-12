@@ -13,7 +13,7 @@ module test();
         rst = 1;
         #5;
         rst = 0;
-        #2000;
+        #2340;
         $stop;
     end
 
