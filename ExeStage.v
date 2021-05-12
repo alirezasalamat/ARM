@@ -17,7 +17,7 @@ module ExeStage(clk, rst, mem_read, mem_write, imm, exe_cmd, SR, PC, val_Rn,
 
     wire [`WORD - 1 : 0] Val2Generator_out;
 
-    ALU ALU_0(.val1(Val2Generator_out), .val2(val_Rn), .cin(SR[2]), .exe_cmd(exe_cmd),
+    ALU ALU_0(.val1(val_Rn), .val2(Val2Generator_out), .cin(SR[2]), .exe_cmd(exe_cmd),
                                      .result(alu_result), .SR(status));
 
     Val2Generator Val2Generator_0(.shift_op(shift_op), .val_Rm(val_Rm), .imm(imm), 
