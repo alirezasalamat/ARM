@@ -3,7 +3,7 @@
 module Arm(clk, rst);
     input clk, rst;
 
-    wire EXE_stage_B_out;
+    wire EXE_stage_B_out, ID_reg_B_out;
     wire detected_hazard;
     wire [`WORD - 1 : 0] IF_stage_pc_out;
     wire [`WORD - 1 : 0] IF_stage_inst_out;
@@ -13,7 +13,7 @@ module Arm(clk, rst);
     IfStage IfStage_0(.clk(clk),
                       .rst(rst),
                       .freeze(detected_hazard),
-                      .branch_taken(EXE_stage_B_out),
+                      .branch_taken(ID_reg_B_out),
                       .branch_address(branch_addr),
                       .PC(IF_stage_pc_out),
                       .instruction(IF_stage_inst_out));
@@ -72,7 +72,7 @@ module Arm(clk, rst);
     wire [`SHIFTER_OPERAND - 1 : 0] ID_reg_shift_op_out;
     wire [`COMMAND - 1 : 0] ID_reg_EX_command_out;
     wire [3 : 0] ID_reg_SR_out;
-    wire ID_reg_mem_read_out, ID_reg_mem_write_out, ID_reg_WB_en_out, ID_reg_Imm_out, ID_reg_B_out, ID_reg_S_out;
+    wire ID_reg_mem_read_out, ID_reg_mem_write_out, ID_reg_WB_en_out, ID_reg_Imm_out, ID_reg_S_out;
     
     IdReg IdReg_0(.clk(clk),
                   .rst(rst),

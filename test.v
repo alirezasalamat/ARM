@@ -11,7 +11,7 @@ module test();
     initial begin
         #10
         rst = 1;
-        #10;
+        #5;
         rst = 0;
         #2000;
         $stop;
