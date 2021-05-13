@@ -52,12 +52,15 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
             `EOR_EXE: begin
                 temp_result = val1 ^ val2;
             end
+<<<<<<< HEAD
             `CMP_EXE: begin
                 temp_result = {val1[31], val1} - {val2[31], val2};
                 
                 cout = temp_result[32];
                 v = ((val1[31] == ~val2[31]) & (temp_result[31] != val1[31]));
             end
+=======
+>>>>>>> 17e82702a18ac523a8b24539499aef30823b4dc4
             `TST_EXE: begin
                 temp_result = val1 & val2;
             end
