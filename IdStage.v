@@ -23,9 +23,11 @@ module IdStage(clk, rst, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
   wire wb_en, mem_read, mem_write, B, S;
   wire [3:0]exe_cmd;
 
+  wire is_ldr;
+
   Mux4_2 Mux4_2_0(instruction[3:0], instruction[15:12], mem_write, src2);
   RegisterFile RegisterFile_0(clk, rst, src1, src2, dest_wb, result_wb, WB_wb_en, val_Rn, val_Rm);
-  Controller Controller_0(instruction[20], instruction[27:26], instruction[24:21], exe_cmd, mem_read, mem_write, wb_en, S, B);
+  Controller Controller_0(instruction[20], instruction[27:26], instruction[24:21], exe_cmd, mem_read, mem_write, wb_en, S, B, is_ldr);
   Mux9_2 Mux9_2_0(controller_mux_in1, 9'b0, controller_mux_s, controller_mux_out);
   ConditionCheck ConditionCheck_0(instruction[31:28], SR, condition_state);
   
@@ -33,7 +35,7 @@ module IdStage(clk, rst, instruction, result_wb, WB_wb_en, dest_wb, hazard, SR
   assign controller_mux_in1 = {S, B, exe_cmd, mem_write, mem_read, wb_en};
   assign controller_mux_s = (~condition_state) | hazard;
   assign {S_out, B_out, exe_cmd_out, mem_write_out, mem_read_out, wb_en_out} = controller_mux_out;
-  assign two_src = (~instruction[25]) | mem_write_out;
+  assign two_src = is_ldr ? 1'b0 : (~instruction[25]) | mem_write_out;
   assign imm = instruction[25];
   assign shift_operand = instruction[11:0];
   assign signed_imm_24 = instruction[23:0];

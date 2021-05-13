@@ -56,12 +56,10 @@ module InstructionMemory(clk, rst, address, instruction);
 		{instruction_mem[172], instruction_mem[173], instruction_mem[174], instruction_mem[175]} = 32'b1110_01_0_0100_1_0000_0100_000000001100; //STR
 		{instruction_mem[176], instruction_mem[177], instruction_mem[178], instruction_mem[179]} = 32'b1110_01_0_0100_1_0000_0101_000000010000; //STR
 		{instruction_mem[180], instruction_mem[181], instruction_mem[182], instruction_mem[183]} = 32'b1110_01_0_0100_1_0000_0110_000000010100; //STR
-		{instruction_mem[184], instruction_mem[185], instruction_mem[186], instruction_mem[187]} = 32'b1110_10_1_0_111111111111111111111111; //B111
+		{instruction_mem[184], instruction_mem[185], instruction_mem[186], instruction_mem[187]} = 32'b1110_10_1_0_111111111111111111111111; //B
+		{instruction_mem[188], instruction_mem[189], instruction_mem[190], instruction_mem[191]} = 32'b11100000000000000000000000000000;
 		{instruction_mem[192], instruction_mem[193], instruction_mem[194], instruction_mem[195]} = 32'b11100000000000000000000000000000;
 		{instruction_mem[196], instruction_mem[197], instruction_mem[198], instruction_mem[199]} = 32'b11100000000000000000000000000000;
-		{instruction_mem[200], instruction_mem[201], instruction_mem[202], instruction_mem[203]} = 32'b11100000000000000000000000000000;
-		{instruction_mem[204], instruction_mem[205], instruction_mem[206], instruction_mem[207]} = 32'b11100000000000000000000000000000;
-		{instruction_mem[208], instruction_mem[209], instruction_mem[210], instruction_mem[211]} = 32'b11100000000000000000000000000000;
 	  end
 
 	always @(address) begin
