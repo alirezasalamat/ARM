@@ -39,7 +39,7 @@
 `define AND_EXE 4'b0110
 `define ORR_EXE 4'b0111
 `define EOR_EXE 4'b1000
-`define CMP_EXE 4'b1000
+`define CMP_EXE 4'b0100
 `define TST_EXE 4'b0110
 `define LDR_EXE 4'b0010
 `define STR_EXE 4'b0010

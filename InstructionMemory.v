@@ -69,7 +69,7 @@ module InstructionMemory(clk, rst, address, instruction);
 	always @(address) begin
 		instruction = {instruction_mem[address], instruction_mem[address + 1],
 						 instruction_mem[address + 2], instruction_mem[address + 3]};
-		$display("@%t: INST_MEM: instruction is %d is read", $time, instruction);
+		$display("@%t: INST_MEM: instruction is %b is read", $time, instruction);
 	end
 
 endmodule

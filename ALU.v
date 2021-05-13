@@ -34,6 +34,7 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
             end
             `SUB_EXE: begin
                 temp_result = {val1[31], val1} - {val2[31], val2};
+                $display("@%t: ALU::CMP :  val1: %d  val2: %d negative is: %d", $time, val1, val2, n);
                 cout = temp_result[32];
                 v = ((val1[31] == ~val2[31]) & (temp_result[31] != val1[31]));
             end
@@ -53,6 +54,7 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
             end
             `CMP_EXE: begin
                 temp_result = {val1[31], val1} - {val2[31], val2};
+                
                 cout = temp_result[32];
                 v = ((val1[31] == ~val2[31]) & (temp_result[31] != val1[31]));
             end

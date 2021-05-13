@@ -12,7 +12,7 @@ module IfReg(clk, rst, freeze, flush, PC_in, instruction_in, PC, instruction);
       PC <= 0;
       instruction <= 0;
     end
-    else if (flush) begin
+    else if (flush && freeze) begin
       PC <= 0;
       instruction <= 0;
     end
