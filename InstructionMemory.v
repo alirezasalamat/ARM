@@ -16,10 +16,10 @@ module InstructionMemory(clk, rst, address, instruction);
 		{instruction_mem[12], instruction_mem[13], instruction_mem[14], instruction_mem[15]} = 32'b1110_00_0_0100_1_0010_0011_000000000010; //ADDS R3 ,R2,R2 //R3 = -2147483648
 		{instruction_mem[16], instruction_mem[17], instruction_mem[18], instruction_mem[19]} = 32'b1110_00_0_0101_0_0000_0100_000000000000; //ADC R4 ,R0,R0 //R4 = 41
 		{instruction_mem[20], instruction_mem[21], instruction_mem[22], instruction_mem[23]} = 32'b1110_00_0_0010_0_0100_0101_000100000100; //SUB R5 ,R4,R4,LSL #2 //R5 = -123
-		{instruction_mem[24], instruction_mem[25], instruction_mem[26], instruction_mem[27]} = 32'b1110_00_0_0110_0_0000_0110_000010100000; //SBC R6 ,R0,R0,LSR #1 //R6 = 9
+		{instruction_mem[24], instruction_mem[25], instruction_mem[26], instruction_mem[27]} = 32'b1110_00_0_0110_0_0000_0110_000010100000; //SBC R6 ,R0,R0,LSR #1 //R6 = 10
 		{instruction_mem[28], instruction_mem[29], instruction_mem[30], instruction_mem[31]} = 32'b1110_00_0_1100_0_0101_0111_000101000010; //ORR R7 ,R5,R2,ASR #2 //R7 = -123
 		{instruction_mem[32], instruction_mem[33], instruction_mem[34], instruction_mem[35]} = 32'b1110_00_0_0000_0_0111_1000_000000000011; //AND R8 ,R7,R3 //R8 = -2147483648
-		{instruction_mem[36], instruction_mem[37], instruction_mem[38], instruction_mem[39]} = 32'b1110_00_0_1111_0_0000_1001_000000000110; //MVN R9 ,R6 //R9 = 10
+		{instruction_mem[36], instruction_mem[37], instruction_mem[38], instruction_mem[39]} = 32'b1110_00_0_1111_0_0000_1001_000000000110; //MVN R9 ,R6 //R9 = -11
 		{instruction_mem[40], instruction_mem[41], instruction_mem[42], instruction_mem[43]} = 32'b1110_00_0_0001_0_0100_1010_000000000101; //EOR R10,R4,R5 //R10 = -84
 		{instruction_mem[44], instruction_mem[45], instruction_mem[46], instruction_mem[47]} = 32'b1110_00_0_1010_1_1000_0000_000000000110; //CMP R8 ,R6
 		{instruction_mem[48], instruction_mem[49], instruction_mem[50], instruction_mem[51]} = 32'b0001_00_0_0100_0_0001_0001_000000000001; //ADDNE R1 ,R1,R1 //R1 = 8192
