@@ -82,7 +82,7 @@ module Controller(S, mode, op_code, exe_cmd, mem_read, mem_write, wb_en, S_out, 
               end
 
               `CMP_OP: begin
-                  exe_cmd = `CMP_EXE;
+                  exe_cmd = `SUB_EXE;
               end
 
               `TST_OP: begin

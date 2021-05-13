@@ -23,7 +23,7 @@ module ExeStage(clk, rst, mem_read, mem_write, imm, exe_cmd, SR, PC, val_Rn,
     Val2Generator Val2Generator_0(.shift_op(shift_op), .val_Rm(val_Rm), .imm(imm), 
                                     .is_mem_cmd(is_mem_cmd), .out(Val2Generator_out));
 
-    Adder32 adder_0(.a({{(8){signed_imm_24[`SIGNED_IMM - 1]}}, signed_imm_24}), .b(PC), .out(br_address));
+    Adder32 adder_0(.a({{(6){signed_imm_24[`SIGNED_IMM - 1]}}, signed_imm_24, 2'b00}), .b(PC), .out(br_address));
 
 endmodule
 

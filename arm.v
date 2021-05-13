@@ -85,7 +85,7 @@ module Arm(clk, rst);
                   .SR_in(status_reg_out),
                   .imm_in(ID_stage_Imm_out),
                   .exe_cmd_in(ID_stage_exe_cmd_out),
-                  .PC_in(IF_reg_inst_out),
+                  .PC_in(IF_reg_pc_out),
                   .val_Rn_in(ID_stage_val_Rn),
                   .val_Rm_in(ID_stage_val_Rm),
                   .shift_operand_in(ID_stage_shift_op),
