@@ -1,6 +1,6 @@
 `include "defines.v"
 
-module HazardDetectionUnit(two_src, EXE_wb_en, MEM_wb_en, src1, src2, EXE_dest, MEM_dest, hazard);
+module HazardDetectionUnit(enable_forwarding, two_src, EXE_wb_en, MEM_wb_en, src1, src2, EXE_dest, MEM_dest, hazard);
     input two_src, EXE_wb_en, MEM_wb_en;
     input [3:0]src1, src2;
     input [3:0]EXE_dest, MEM_dest;

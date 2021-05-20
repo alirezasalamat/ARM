@@ -1,7 +1,7 @@
 `include "defines.v"
 
-module Arm(clk, rst);
-    input clk, rst;
+module Arm(clk, rst, enable_forwarding);
+    input clk, rst, enable_forwarding;
 
     wire ID_reg_B_out;
     wire detected_hazard;
@@ -73,7 +73,8 @@ module Arm(clk, rst);
     wire [`COMMAND - 1 : 0] ID_reg_EX_command_out;
     wire [3 : 0] ID_reg_SR_out;
     wire ID_reg_mem_read_out, ID_reg_mem_write_out, ID_reg_WB_en_out, ID_reg_Imm_out, ID_reg_S_out;
-    
+    wire [3:0] ID_src1, ID_src2;
+
     IdReg IdReg_0(.clk(clk),
                   .rst(rst),
                   .flush(ID_reg_B_out),
@@ -109,6 +110,7 @@ module Arm(clk, rst);
 
     wire [`WORD - 1 : 0 ] ALU_res;
     wire [3:0] EXE_stage_status_out;
+    wire [1:0]EXE_sel_src1, EXE_sel_src2;
 
     ExeStage ExeStage_0(.clk(clk),
                         .rst(rst),
@@ -130,7 +132,6 @@ module Arm(clk, rst);
     wire [`WORD - 1 : 0] EXE_reg_ALU_result_out, EXE_reg_val_Rm_out;
     wire [`REG_FILE - 1 : 0] EXE_reg_dst_out;
     wire EXE_reg_mem_read_out, EXE_reg_mem_write_out, EXE_reg_WB_en_out;
-
 
     ExeReg ExeReg_0(.clk(clk),
                     .rst(rst), 
@@ -177,9 +178,9 @@ module Arm(clk, rst);
 
 
     WbStage WbStage_0(.alu_result(Mem_Reg_ALU_result_out),
-                      .mem_result(Mem_Reg_mem_out),
-                      .mem_read(Mem_Reg_read_out),
-                      .out(WB_value));
+                                .mem_result(Mem_Reg_mem_out),
+                                .mem_read(Mem_Reg_read_out),
+                                .out(WB_value));
 
 
     StatusRegister StatusRegister_0(.clk(clk),
@@ -189,13 +190,24 @@ module Arm(clk, rst);
                                     .SR(status_reg_out));
 
 
-    HazardDetectionUnit HazardDetectionUnit_0(.two_src(has_two_src),
-                                              .EXE_wb_en(ID_reg_WB_en_out),
-                                              .MEM_wb_en(EXE_reg_WB_en_out),
-                                              .src1(ID_stage_reg_file_src1), 
-                                              .src2(ID_stage_reg_file_src2),
-                                              .EXE_dest(ID_reg_reg_file_dst_out),
-                                              .MEM_dest(EXE_reg_dst_out),
-                                              .hazard(detected_hazard));
+    HazardDetectionUnit HazardDetectionUnit_0(.enable_forwarding(enable_forwarding),
+                                            .two_src(has_two_src),
+                                            .EXE_wb_en(ID_reg_WB_en_out),
+                                            .MEM_wb_en(EXE_reg_WB_en_out),
+                                            .src1(ID_stage_reg_file_src1), 
+                                            .src2(ID_stage_reg_file_src2),
+                                            .EXE_dest(ID_reg_reg_file_dst_out),
+                                            .MEM_dest(EXE_reg_dst_out),
+                                            .hazard(detected_hazard));
+
+    ForwardingUnit ForwardingUnit_0(.enable_forwarding(enable_forwarding),
+                                    .WB_wb_en(WB_wb_en),
+                                    .MEM_wb_en(EXE_reg_WB_en_out),
+                                    .MEM_dest(EXE_reg_dst_out),
+                                    .WB_dest(WB_wb_dst),
+                                    .ID_src1(ID_src1),
+                                    .ID_src2(ID_src2), 
+                                    .sel_src1(EXE_sel_src1),
+                                    .sel_src2(EXE_sel_src2));
 
 endmodule
