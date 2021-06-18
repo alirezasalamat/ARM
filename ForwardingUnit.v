@@ -1,10 +1,10 @@
 `include "defines.v"
 
-module ForwardingUnit(enable_forwarding, WB_wb_en, MEM_wb_en, MEM_dest, WB_dest, ID_src1, ID_src2, sel_src1, sel_src2);
-    input enable_forwarding, WB_wb_en, MEM_wb_en;
+module ForwardingUnit(enable_forwarding, WB_WB_en, MEM_WB_en, MEM_dest, WB_dest, ID_src1, ID_src2, sel_src1, sel_src2);
+    input enable_forwarding, WB_WB_en, MEM_WB_en;
     input [3:0] MEM_dest, WB_dest, ID_src1, ID_src2;
 
-    output [1:0] sel_src1, sel_src2;
+    output reg [1:0] sel_src1, sel_src2;
 
     always @(*) begin
     sel_src1 = 2'b00;

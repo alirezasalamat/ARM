@@ -92,6 +92,8 @@ module Arm(clk, rst, enable_forwarding);
                   .shift_operand_in(ID_stage_shift_op),
                   .signed_imm_24_in(ID_stage_signed_imm),
                   .dest_in(ID_stage_reg_file_dst),
+                  .src1(ID_stage_reg_file_src1),
+                  .src2(ID_stage_reg_file_src2),
                   .wb_en(ID_reg_WB_en_out),
                   .mem_read(ID_reg_mem_read_out), 
                   .mem_write(ID_reg_mem_write_out), 
@@ -105,10 +107,12 @@ module Arm(clk, rst, enable_forwarding);
                   .val_Rm(ID_reg_val_Rm_out),
                   .shift_operand(ID_reg_shift_op_out),
                   .signed_imm_24(ID_reg_signed_imm_out),
-                  .dest(ID_reg_reg_file_dst_out));
+                  .dest(ID_reg_reg_file_dst_out),
+                  .src1_out(ID_src1),
+                  .src2_out(ID_src2));
 
 
-    wire [`WORD - 1 : 0 ] ALU_res;
+    wire [`WORD - 1 : 0 ] ALU_res, val2_generator_in, EXE_reg_ALU_result_out;
     wire [3:0] EXE_stage_status_out;
     wire [1:0]EXE_sel_src1, EXE_sel_src2;
 
@@ -124,12 +128,17 @@ module Arm(clk, rst, enable_forwarding);
                         .val_Rm(ID_reg_val_Rm_out), 
                         .shift_op(ID_reg_shift_op_out), 
                         .signed_imm_24(ID_reg_signed_imm_out),
+                        .WB_val(WB_value),
+                        .MEM_val(EXE_reg_ALU_result_out),
+                        .sel_src1(EXE_sel_src1),
+                        .sel_src2(EXE_sel_src2),
                         .alu_result(ALU_res), 
                         .br_address(branch_addr), 
-                        .status(EXE_stage_status_out));
+                        .status(EXE_stage_status_out),
+                        .mux2_out(val2_generator_in));
 
 
-    wire [`WORD - 1 : 0] EXE_reg_ALU_result_out, EXE_reg_val_Rm_out;
+    wire [`WORD - 1 : 0] EXE_reg_val_Rm_out;
     wire [`REG_FILE - 1 : 0] EXE_reg_dst_out;
     wire EXE_reg_mem_read_out, EXE_reg_mem_write_out, EXE_reg_WB_en_out;
 
@@ -139,7 +148,7 @@ module Arm(clk, rst, enable_forwarding);
                     .mem_read_in(ID_reg_mem_read_out),
                     .mem_write_in(ID_reg_mem_write_out),
                     .alu_result_in(ALU_res),
-                    .val_Rm_in(ID_reg_val_Rm_out),
+                    .val_Rm_in(val2_generator_in),
                     .dest_in(ID_reg_reg_file_dst_out),
                     .wb_en(EXE_reg_WB_en_out),
                     .mem_read(EXE_reg_mem_read_out),
@@ -191,6 +200,7 @@ module Arm(clk, rst, enable_forwarding);
 
 
     HazardDetectionUnit HazardDetectionUnit_0(.enable_forwarding(enable_forwarding),
+                                            .EXE_mem_read_en(ID_reg_mem_read_out),
                                             .two_src(has_two_src),
                                             .EXE_wb_en(ID_reg_WB_en_out),
                                             .MEM_wb_en(EXE_reg_WB_en_out),
@@ -201,8 +211,8 @@ module Arm(clk, rst, enable_forwarding);
                                             .hazard(detected_hazard));
 
     ForwardingUnit ForwardingUnit_0(.enable_forwarding(enable_forwarding),
-                                    .WB_wb_en(WB_wb_en),
-                                    .MEM_wb_en(EXE_reg_WB_en_out),
+                                    .WB_WB_en(WB_wb_en),
+                                    .MEM_WB_en(EXE_reg_WB_en_out),
                                     .MEM_dest(EXE_reg_dst_out),
                                     .WB_dest(WB_wb_dst),
                                     .ID_src1(ID_src1),
