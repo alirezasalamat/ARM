@@ -1,10 +1,10 @@
 `include "defines.v"
 
-module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, SR_in, imm_in, exe_cmd_in
+module IdReg(clk, rst, flush, frz, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, SR_in, imm_in, exe_cmd_in
         , PC_in, val_Rn_in, val_Rm_in, shift_operand_in, signed_imm_24_in, dest_in, src1, src2
         , wb_en, mem_read, mem_write, B, S, SR_out, imm, exe_cmd, PC, val_Rn, val_Rm, shift_operand
         , signed_imm_24, dest, src1_out, src2_out);
-    input clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, imm_in;
+    input clk, rst, flush, frz, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, imm_in;
     input [3:0]exe_cmd_in;
     input [31:0]PC_in, val_Rn_in, val_Rm_in;
     input [11:0]shift_operand_in;
@@ -21,7 +21,7 @@ module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, S
     output reg [3:0]src1_out, src2_out;
 
     always @(posedge clk, posedge rst) begin
-        if (rst || flush) begin
+        if (rst || (flush && frz)) begin
             wb_en <= 0;
             mem_read <= 0;
             mem_write <= 0;
@@ -39,7 +39,7 @@ module IdReg(clk, rst, flush, wb_en_in, mem_read_in, mem_write_in, B_in, S_in, S
             src1_out <= 0;
             src2_out <= 0;
         end
-        else begin
+        else if(frz) begin
             wb_en <= wb_en_in;
             mem_read <= mem_read_in;
             mem_write <= mem_write_in;

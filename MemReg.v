@@ -1,8 +1,8 @@
 `include "defines.v"
 
-module MemReg(clk, rst, wb_en_in, mem_read_in, alu_result_in, mem_result_in, dest_in
+module MemReg(clk, rst, frz, wb_en_in, mem_read_in, alu_result_in, mem_result_in, dest_in
         , wb_en, mem_read, alu_result, mem_result, dest);
-    input clk, rst, wb_en_in, mem_read_in;
+    input clk, rst, frz, wb_en_in, mem_read_in;
     input [31:0]alu_result_in, mem_result_in;
     input [3:0]dest_in;
 
@@ -18,7 +18,7 @@ module MemReg(clk, rst, wb_en_in, mem_read_in, alu_result_in, mem_result_in, des
         mem_result <= 0;
         dest <= 0;
     end
-    else begin
+    else if(frz) begin
         wb_en <= wb_en_in;
         mem_read <= mem_read_in;
         alu_result <= alu_result_in;

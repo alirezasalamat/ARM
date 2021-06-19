@@ -1,10 +1,13 @@
 `include "defines.v"
 
-module Arm(clk, rst, enable_forwarding);
+module Arm(clk, rst, enable_forwarding, SRAM_DQ, SRAM_ADDR, SRAM_WE_N);
     input clk, rst, enable_forwarding;
+    inout[31:0] SRAM_DQ;
+	output[16:0] SRAM_ADDR;
+	output SRAM_WE_N;
 
     wire ID_reg_B_out;
-    wire detected_hazard;
+    wire detected_hazard, sram_ready;
     wire [`WORD - 1 : 0] IF_stage_pc_out;
     wire [`WORD - 1 : 0] IF_stage_inst_out;
     wire [`WORD - 1 : 0] branch_addr;
@@ -12,7 +15,7 @@ module Arm(clk, rst, enable_forwarding);
 
     IfStage IfStage_0(.clk(clk),
                       .rst(rst),
-                      .freeze(detected_hazard),
+                      .freeze(detected_hazard | ~sram_ready),
                       .branch_taken(ID_reg_B_out),
                       .branch_address(branch_addr),
                       .PC(IF_stage_pc_out),
@@ -24,7 +27,7 @@ module Arm(clk, rst, enable_forwarding);
 
     IfReg IfReg_0(.clk(clk),
                   .rst(rst),
-                  .freeze(detected_hazard),
+                  .freeze(detected_hazard | ~sram_ready),
                   .flush(ID_reg_B_out),
                   .PC_in(IF_stage_pc_out),
                   .instruction_in(IF_stage_inst_out),
@@ -78,6 +81,7 @@ module Arm(clk, rst, enable_forwarding);
     IdReg IdReg_0(.clk(clk),
                   .rst(rst),
                   .flush(ID_reg_B_out),
+                  .frz(sram_ready),
                   .wb_en_in(ID_stage_WB_en_out),
                   .mem_read_in(ID_stage_mem_read_out),
                   .mem_write_in(ID_stage_mem_write_out),
@@ -144,6 +148,7 @@ module Arm(clk, rst, enable_forwarding);
 
     ExeReg ExeReg_0(.clk(clk),
                     .rst(rst), 
+                    .frz(sram_ready),
                     .wb_en_in(ID_reg_WB_en_out),
                     .mem_read_in(ID_reg_mem_read_out),
                     .mem_write_in(ID_reg_mem_write_out),
@@ -166,7 +171,12 @@ module Arm(clk, rst, enable_forwarding);
                         .mem_write(EXE_reg_mem_write_out),
                         .address(EXE_reg_ALU_result_out),
                         .data(EXE_reg_val_Rm_out),
-                        .mem_result(Mem_Stage_mem_out));
+                        .mem_result(Mem_Stage_mem_out),
+                        .sram_ready(sram_ready), 
+                        .SRAM_DQ(SRAM_DQ), 
+                        .SRAM_ADDR(SRAM_ADDR), 
+                        .SRAM_WE_N(SRAM_WE_N)
+                        );
 
     
     wire [`WORD - 1 : 0] Mem_Reg_ALU_result_out, Mem_Reg_mem_out;
@@ -174,6 +184,7 @@ module Arm(clk, rst, enable_forwarding);
 
     MemReg MemReg_0(.clk(clk),
                     .rst(rst),
+                    .frz(sram_ready),
                     .wb_en_in(EXE_reg_WB_en_out),
                     .mem_read_in(EXE_reg_mem_read_out),
                     .alu_result_in(EXE_reg_ALU_result_out),
