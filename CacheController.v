@@ -49,20 +49,16 @@ module CacheController(clk, rst, address, wdata, MEM_R_EN, MEM_W_EN, sram_rdata,
 	assign ns = (ps == IDLE && MEM_R_EN && ~hit) ? READ :
 				(ps == IDLE && MEM_W_EN) ? WRITE :
 				(ps == READ && sram_ready) ? IDLE :
-				(ps == WRITE && sram_ready) ? IDLE :
-				ps; 
+				(ps == WRITE && sram_ready) ? IDLE : ps; 
 
 	assign ready = (ns == IDLE);
 
 	assign rdata = (ps == IDLE && hit) ? read_cache_data :
-					(ps == READ && sram_ready) ? (
-						cache_address[0] ? sram_rdata[63:32] : sram_rdata[31:0]
-					):
-					32'bz;
+					(ps == READ && sram_ready) ?
+					(cache_address[0] ? sram_rdata[63:32] : sram_rdata[31:0] ) : 32'bz;
 
 	always @(ps, address) begin
-		sram_address = (ps == READ) ? address :
-						(ps == WRITE) ? address : 32'bz;
+		sram_address = (ps == READ) ? address : (ps == WRITE) ? address : 32'bz;
 	end
 
 	always @(ps, wdata) begin

@@ -55,13 +55,6 @@ module ALU(val1, val2, cin, exe_cmd, result, SR);
             `TST_EXE: begin
                 temp_result = val1 & val2;
             end
-            //`LDR_EXE: begin
-            //    temp_result = val1 + val2;
-            //end
-            //`STR_EXE: begin
-            //    // @TODO: - or + ?
-            //    temp_result = val1 + val2;
-            //end
         endcase
     end
 

@@ -15,7 +15,7 @@ module MemStage(clk, rst, mem_read, mem_write, address, data, mem_result, ready,
 
     wire sram_ready, sram_read_en, sram_write_en;
 
-    CacheController cc(
+    CacheController CacheController_0(
     	.clk(clk),
         .rst(rst),
         .address(address),
@@ -32,7 +32,7 @@ module MemStage(clk, rst, mem_read, mem_write, address, data, mem_result, ready,
         .read(sram_read_en)
 	);
 
-    SRAM_controller SRAM_controller(
+    SRAM_controller SRAM_controller_0(
         .clk(clk),
         .rst(rst),
         .read_en(sram_read_en),
