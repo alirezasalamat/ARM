@@ -2,7 +2,7 @@
 
 module Arm(clk, rst, enable_forwarding, SRAM_DQ, SRAM_ADDR, SRAM_WE_N);
     input clk, rst, enable_forwarding;
-    inout[31:0] SRAM_DQ;
+    inout[63:0] SRAM_DQ;
 	output[16:0] SRAM_ADDR;
 	output SRAM_WE_N;
 
@@ -172,7 +172,7 @@ module Arm(clk, rst, enable_forwarding, SRAM_DQ, SRAM_ADDR, SRAM_WE_N);
                         .address(EXE_reg_ALU_result_out),
                         .data(EXE_reg_val_Rm_out),
                         .mem_result(Mem_Stage_mem_out),
-                        .sram_ready(sram_ready), 
+                        .ready(sram_ready), 
                         .SRAM_DQ(SRAM_DQ), 
                         .SRAM_ADDR(SRAM_ADDR), 
                         .SRAM_WE_N(SRAM_WE_N)

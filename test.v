@@ -5,7 +5,7 @@ module test();
     reg s_clk = 1'b0;
     reg rst, enable_forwarding;
 
-    wire[31:0] SRAM_DQ;
+    wire[63:0] SRAM_DQ;
 	wire[16:0] SRAM_ADDR;
     wire SRAM_WE_N;
 

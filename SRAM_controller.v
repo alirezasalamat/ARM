@@ -4,10 +4,10 @@ module SRAM_controller(clk, rst, write_en, read_en, address, write_data, read_da
     input clk, rst, write_en, read_en;
     input [31:0] address, write_data;
     
-    inout [31:0] SRAM_dq;
+    inout [63:0] SRAM_dq;
 
     output ready, SRAM_we_n;
-    output [31:0] read_data;
+    output [63:0] read_data;
     output [16:0] SRAM_addr;
 
     parameter [1:0] IDLE = 2'b00;
@@ -16,7 +16,7 @@ module SRAM_controller(clk, rst, write_en, read_en, address, write_data, read_da
 
     reg [1:0] ps;
     reg [2:0] cnt_out;
-    reg [31:0] dq;
+    reg [63:0] dq;
 
     wire [1:0] ns;
     wire [2:0] cnt;
@@ -47,8 +47,8 @@ module SRAM_controller(clk, rst, write_en, read_en, address, write_data, read_da
         (ps == READ && cnt != 3'b110) ? READ :
         (ps == WRITE && cnt != 3'b110) ? WRITE : 2'b00;
 
-    assign SRAM_dq = (ns == WRITE && cnt < 3'b110) ? write_data : 32'bz;
+    assign SRAM_dq = (ns == WRITE && cnt < 3'b110) ? write_data : 64'bz;
     assign SRAM_we_n = (ns == WRITE && cnt < 3'b110) ? 1'b0 : 1'b1; 
-    assign read_data = read_en ? dq : 32'bz;
+    assign read_data = read_en ? dq : 64'bz;
     assign ready = (ns == READ && cnt < 3'b110) ? 1'b0 : (ns == WRITE && cnt < 3'b110) ? 1'b0 : 1'b1;
 endmodule
